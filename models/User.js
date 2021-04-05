@@ -5,7 +5,6 @@ class User {
   constructor (data) {
     this.username = data.username
     this.passwordDigest = data.password_digest
-    this.daily_streak = 0;
   }
 
   static get all() {
@@ -16,6 +15,18 @@ class User {
         res(users);
       } catch (err) {
         rej(`ERROR: Could not retrieve users - ${err}`);
+      }
+    })
+  }
+
+  static create({ username, password }) {
+    return new Promise(async (res, rej) => {
+      try {
+        let result = await db.run(SQL`INSERT INTO USERS (username, password_digest) VALUES (${username}, ${password}) RETURNING *;`)
+        let user = new User(result.rows[0]);
+        res(user);
+      } catch (err) {
+        rej(`ERROR: Creating user - ${err}`);
       }
     })
   }
