@@ -9,26 +9,40 @@ describe('User', () => {
 
     afterAll(() => jest.resetAllMocks())
 
-    // describe('users', () => {
-    //     test('it resolves with users on successful db query', async () => {
-    //         jest.spyOn(db, 'query')
-    //             .mockResolvedValueOnce({ 
-    //                 rows: [{id: 1, name: 'user1'}, {id: 2, name: 'user2'}]
-    //             });
-    //         let testUser = new User({ id: 1, name: 'Test Owner'})
-    //         const dogs = await testOwner.dogs;
-    //         expect(dogs).toHaveLength(2)
-    //     })
-    // });
-
-    describe('findById', () => {
-        test('it resolves with user on successful db query', async () => {
-            let userData = { id: 1, name: 'Test user' }
+    describe('all', () => {
+        test('it resolves with users on successful db query', async () => {
             jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [userData] });
-            const result = await User.findById(1);
-            expect(result).toBeInstanceOf(User)
+                .mockResolvedValueOnce({ rows: [{}, {}, {}]});
+            const all = await User.all;
+            expect(all).toHaveLength(3)
         })
     });
-    
-})
+
+    describe('create', () => {
+        test('it resolves with user on successful db query', async () => {
+            let userData = {username: 'testUser', passwordDigest: 'password'};
+            jest.spyOn(db, 'query')
+                .mockResolvedValueOnce({rows: [ [userData] });
+            const result = await User.create(userData);
+            expect(result).toHaveProperty('id')
+        })
+    });
+
+    describe('findByUsername', () => {
+        test('it resolves with user on successful db query', async () => {
+            let userData = {username: 'testUser', passwordDigest: 'password'};
+            jest.spyOn(db, 'query')
+                .mockResolvedValueOnce({rows: [userData] });
+            const result = await User.findByUsername(testUser);
+            expect(result).toBeInstanceOf(User)
+        })
+
+        test('it rejects with an error message on unsuccessful db query', async () => {
+            let username = "username1";
+            jest.spyOn(db, 'query').mockResolvedValueOnce(undefined);
+            await User.findByUsername(username).catch(e => {
+                expect(e).toEqual("User not found");
+            });
+        });
+    })
+});
