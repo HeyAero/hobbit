@@ -17,7 +17,8 @@
   },
   "devDependencies": {
     "concurrently": "^6.0.0",
-    "watchify": "^4.0.0",
-    "http-server": "^0.12.3"
+    "http-server": "^0.12.3",
+    "jest-fetch-mock": "^3.0.3",
+    "watchify": "^4.0.0"
   }
 }
