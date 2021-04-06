@@ -66,8 +66,8 @@ class Habit {
       } catch (error) {
         reject('Could not delete habit')
       }
-
+    });
   }
 }
 
-module.exports { Habit };
+module.exports = Habit ;
