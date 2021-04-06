@@ -1,5 +1,6 @@
 const habitsController = require('../../../controllers/habits')
 const Habit = require('../../../models/Habit');
+const User = require('../../../models/User');
 
 const mockSend = jest.fn();
 const mockJson = jest.fn();
@@ -19,6 +20,17 @@ describe('habits controller', () => {
             await habitsController.index(null, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(200);
             expect(mockJson).toHaveBeenCalledWith(testHabits);
+        })
+    });
+
+    describe('showUser', () => {
+        test('it returns a user with a 200 status code', async () => {
+            jest.spyOn(User, 'findById')
+                .mockResolvedValue(new User( { id: 1, username: 'Test User'} ));
+
+            const mockReq = { params: { id: 1 } }
+            await habitsController.showUser(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(200);
         })
     });
 
