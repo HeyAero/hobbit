@@ -10,14 +10,38 @@ class Habit {
     this.userId = data.user_id;
   }
 
-  static findByUserId(user_id) {
+  static get all() {
+    return new Promise (async (resolve,reject) => {
+      try {
+        const result = await db.query(SQL`SELECT * FROM habits`);
+        const habits = result.rows.map((h) => new Habit(h))
+        resolve(habits)
+      } catch (error) {
+        reject("Could not retrieve habits")
+      }
+    });
+  }
+
+   static findByHabitId(id) {
     return new Promise (async (resolve,reject) => {
       try{
-        const result = await db.query(SQL`SELECT * FROM habits WHERE user_id = ${user_id};`);
+        const result = await db.query(SQL`SELECT * FROM habits WHERE id = ${id};`);
         const habit = new Habit(result.rows[0]);
         resolve(habit)
       } catch (error) {
         reject('Could not find habit');
+      }
+    });
+  }
+
+  static findByUserId(user_id) {
+    return new Promise (async (resolve,reject) => {
+      try{
+        const result = await db.query(SQL`SELECT * FROM habits WHERE user_id = ${user_id};`);
+        const user = new Habit(result.rows[0]);
+        resolve(user)
+      } catch (error) {
+        reject('Could not find user');
       }
     });
   }
@@ -45,3 +69,5 @@ class Habit {
 
   }
 }
+
+module.exports { Habit };
