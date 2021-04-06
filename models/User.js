@@ -10,7 +10,7 @@ class User {
   static get all() {
     return new Promise(async (res, rej) => {
       try {
-        let result = await db.run(SQL`SELECT * FROM users;`);
+        let result = await db.query(SQL`SELECT * FROM users;`);
         let users = result.row.map(r => new User(r));
         res(users);
       } catch (err) {
@@ -22,7 +22,7 @@ class User {
   static create({ username, password }) {
     return new Promise(async (res, rej) => {
       try {
-        let result = await db.run(SQL`INSERT INTO USERS (username, password_digest) VALUES (${username}, ${password}) RETURNING *;`)
+        let result = await db.query(SQL`INSERT INTO USERS (username, password_digest) VALUES (${username}, ${password}) RETURNING *;`)
         let user = new User(result.rows[0]);
         res(user);
       } catch (err) {
@@ -34,7 +34,7 @@ class User {
   static findByUsername(username) {
     return new Promise(async (res, rej) => {
       try {
-        let result = await db.run(SQL`SELECT * FROM users WHERE username = ${username};`)
+        let result = await db.query(SQL`SELECT * FROM users WHERE username = ${username};`)
         let user = new User(result.rows[0]);
         res(user);
       } catch (err) {
