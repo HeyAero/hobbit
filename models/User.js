@@ -24,6 +24,7 @@ class User {
       try {
         let result = await db.query(SQL`INSERT INTO USERS (username, password_digest) VALUES (${username}, ${password}) RETURNING *;`)
         let user = new User(result.rows[0]);
+        if(!user) throw new Error("Username Already Exists")
         res(user);
       } catch (err) {
         rej(`ERROR: Creating user - ${err}`);
