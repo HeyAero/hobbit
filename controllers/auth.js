@@ -24,7 +24,7 @@ async function login(req, res) {
         console.log(user.passwordDigest)
         const authed = bcrypt.compare(req.body.password, user.passwordDigest)
         if (!!authed){
-            const payload = { username: user.username }
+            const payload = { id: user.id }
             const sendToken = (err, token) => {
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
