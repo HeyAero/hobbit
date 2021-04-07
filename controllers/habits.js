@@ -11,7 +11,7 @@ async function index (req, res) {
 
 async function showUser(req, res) {
     try {
-        const user = await Habit.findByUserId(req.params.user_id);
+        const user = await Habit.findByUserId(req.params.id);
         res.status(200).json(user);
     } catch (err) {
         res.status(404).json({ err });

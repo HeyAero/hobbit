@@ -42,21 +42,23 @@ class Habit {
                 const result = await db.query(
                     SQL`SELECT * FROM habits WHERE user_id = ${user_id};`
                 );
-                let habits = result.row.map(r => new Habit(r));
+                if(!result.rows[0]) throw new Error("No result found")
+                let habits = result.rows.map(r => new Habit(r));
                 resolve(habits);
             } catch (error) {
-                reject("Could not find user");
+                reject("Could not find user " + error);
             }
         });
     }
 
-    static create(name, habit_desc, frequency) {
+    static create({name, desc, freq, id}) {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await db.query(
-                    SQL`INSERT INTO habits (name, habit_desc, frequency, streak_track, streak_start, streak_end, user_id) VALUES (${name}, ${habit_desc}, ${frequency}, 0, 0, 0, ${user_id}) RETURNING *;`
+                    SQL`INSERT INTO habits (name, habit_desc, frequency, streak_track, streak_start, streak_end, user_id) VALUES (${name}, ${desc}, ${freq}, 0, 0, 0, ${id}) RETURNING *;`
                 );
                 const habit = new Habit(result.rows[0]);
+                console.log(habit);
                 resolve(habit);
             } catch (error) {
                 reject("Could not create habit");
@@ -78,4 +80,4 @@ class Habit {
     }
 }
 
-module.exports = { Habit }
+module.exports = Habit
