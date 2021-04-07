@@ -54,7 +54,7 @@ class Habit {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await db.query(
-                    SQL`INSERT INTO habits (name, habit_desc, frequency) VALUES (${name}, ${habit_desc}, ${frequency}) RETURNING *;`
+                    SQL`INSERT INTO habits (name, habit_desc, frequency, streak_track, streak_start, streak_end, user_id) VALUES (${name}, ${habit_desc}, ${frequency}, 0, 0, 0, ${user_id}) RETURNING *;`
                 );
                 const habit = new Habit(result.rows[0]);
                 resolve(habit);
