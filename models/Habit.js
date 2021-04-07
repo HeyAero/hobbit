@@ -42,8 +42,8 @@ class Habit {
                 const result = await db.query(
                     SQL`SELECT * FROM habits WHERE user_id = ${user_id};`
                 );
-                const user = new Habit(result.rows[0]);
-                resolve(user);
+                let habits = result.row.map(r => new Habit(r));
+                resolve(habits);
             } catch (error) {
                 reject("Could not find user");
             }

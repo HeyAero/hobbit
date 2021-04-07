@@ -10,7 +10,7 @@ async function register(req, res) {
         const salt = await bcrypt.genSalt();
         const hashed = await bcrypt.hash(req.body.password, salt)
         const result = await User.create({...req.body, password: hashed})
-        res.status(201).json({username :result.username})
+        res.status(201).json({username :result.username, id : result.id})
     } catch (err) {
         res.status(500).json({err});
     }
@@ -24,7 +24,7 @@ async function login(req, res) {
         console.log(user.passwordDigest)
         const authed = bcrypt.compare(req.body.password, user.passwordDigest)
         if (!!authed){
-            const payload = { id: user.id }
+            const payload = { username: user.username, id : user.id }
             const sendToken = (err, token) => {
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
