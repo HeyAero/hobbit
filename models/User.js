@@ -22,11 +22,12 @@ class User {
   static create({ username, password }) {
     return new Promise(async (res, rej) => {
       try {
-        let result = await db.query(SQL`INSERT INTO USERS (username, password_digest) VALUES (${username}, ${password}) RETURNING *;`)
+        let result = await db.query(SQL`INSERT INTO USERS (username, password_digest) VALUES (${username}, ${password}) ON CONFLICT DO NOTHING RETURNING *;`)
+        if(!result.rows[0]) throw new Error("Username Already Exists")
         let user = new User(result.rows[0]);
         res(user);
       } catch (err) {
-        rej(`ERROR: Creating user - ${err}`);
+        rej(`ERROR: Creating user - ${err.message}`);
       }
     })
   }

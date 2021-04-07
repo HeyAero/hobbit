@@ -9,8 +9,8 @@ async function register(req, res) {
     try {
         const salt = await bcrypt.genSalt();
         const hashed = await bcrypt.hash(req.body.password, salt)
-        await User.create({...req.body, password: hashed})
-        res.status(201).json({msg: 'User created'})
+        const result = await User.create({...req.body, password: hashed})
+        res.status(201).json({username :result.username})
     } catch (err) {
         res.status(500).json({err});
     }
@@ -27,7 +27,7 @@ async function login(req, res) {
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
                     success: true,
-                    token: token,
+                    token:  token,
                 });
             }
             jwt.sign(payload, process.env.SECRET, { expiresIn: 1000 }, sendToken);
