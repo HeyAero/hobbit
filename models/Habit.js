@@ -78,4 +78,4 @@ class Habit {
     }
 }
 
-module.exports = { Habit }
+module.exports = Habit;
