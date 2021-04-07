@@ -23,22 +23,22 @@ describe('habits controller', () => {
     //     })
     // });
 
-    // describe('showUserHabits', () => {
-    //     test('it returns the habits for a user with a 200 status code', async () => {
-    //         let testHabit = {
-    //             name: 'habit', 
-    //             desc: 'description',
-    //             frequency: 'daily',
-    //             userId: 1,
-    //         }
-    //         jest.spyOn(Habit, 'findHabitsByUserId')
-    //             .mockResolvedValue(new Habit(testHabit));
+    describe('showUserHabits', () => {
+        test('it returns the habits for a user with a 200 status code', async () => {
+            let testHabit = {
+                name: 'habit', 
+                desc: 'description',
+                frequency: 'daily',
+                userId: 1,
+            }
+            jest.spyOn(Habit, 'findHabitsByUserId')
+                .mockResolvedValue(new Habit(testHabit));
                
-    //         const mockReq = { params: { id: 1 } }
-    //         await habitsController.showUser(mockReq, mockRes);
-    //         expect(mockStatus).toHaveBeenCalledWith(200);
-    //         expect(mockJson).toHaveBeenCalledWith(new Habit(testHabit));
-    //     })
-    // });
+            const mockReq = { params: { id: 1 } }
+            await habitsController.showUserHabits(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(200);
+            expect(mockJson).toHaveBeenCalledWith(new Habit(testHabit));
+        })
+    });
 
 })
