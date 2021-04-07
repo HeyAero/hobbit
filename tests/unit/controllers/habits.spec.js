@@ -23,7 +23,7 @@ describe('habits controller', () => {
     //     })
     // });
 
-    describe('showUser', () => {
+    describe('showUserHabits', () => {
         test('it returns the habits for a user with a 200 status code', async () => {
             let testHabit = {
                 name: 'habit', 
@@ -31,7 +31,7 @@ describe('habits controller', () => {
                 frequency: 'daily',
                 userId: 1,
             }
-            jest.spyOn(Habit, 'findByUserId')
+            jest.spyOn(Habit, 'findHabitsByUserId')
                 .mockResolvedValue(new Habit(testHabit));
                
             const mockReq = { params: { id: 1 } }

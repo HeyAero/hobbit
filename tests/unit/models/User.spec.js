@@ -20,9 +20,9 @@ describe('User', () => {
 
     describe('create', () => {
         test('it resolves with user on successful db query', async () => {
-            let userData = {username: 'testUser', passwordDigest: 'password'};
+            let userData = { username: 'testUser', passwordDigest: 'password' };
             jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({rows: [ [userData] });
+                .mockResolvedValueOnce({rows: [userData] });
             const result = await User.create(userData);
             expect(result).toHaveProperty('id')
         })
@@ -33,7 +33,7 @@ describe('User', () => {
             let userData = {username: 'testUser', passwordDigest: 'password'};
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({rows: [userData] });
-            const result = await User.findByUsername(testUser);
+            const result = await User.findByUsername('testUser');
             expect(result).toBeInstanceOf(User)
         })
 
@@ -41,7 +41,7 @@ describe('User', () => {
             let username = "username1";
             jest.spyOn(db, 'query').mockResolvedValueOnce(undefined);
             await User.findByUsername(username).catch(e => {
-                expect(e).toEqual("User not found");
+                expect(e).toEqual(`${e}`);
             });
         });
     })
