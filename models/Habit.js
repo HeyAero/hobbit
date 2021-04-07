@@ -36,7 +36,7 @@ class Habit {
         });
     }
 
-    static findByUserId(user_id) {
+    static findHabitsByUserId(user_id) {
         return new Promise(async (resolve, reject) => {
             try {
                 const result = await db.query(
