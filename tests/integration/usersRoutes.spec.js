@@ -17,6 +17,7 @@ describe('users endpoints', () => {
     it('should retrieve all users', async () => {
         const res = await request(api).get('/users')
         expect(res.statusCode).toEqual(200)
+        expect(res.body).toHaveLength(2)
     })
 
     it('should retrieve a user based on id', async () => {
