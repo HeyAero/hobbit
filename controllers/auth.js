@@ -27,7 +27,7 @@ async function login(req, res) {
                 if(err){ throw new Error('Error in token generation') }
                 res.status(200).json({
                     success: true,
-                    token: token,
+                    token:  token,
                 });
             }
             jwt.sign(payload, process.env.SECRET, { expiresIn: 1000 }, sendToken);
