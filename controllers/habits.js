@@ -9,9 +9,9 @@ async function index (req, res) {
     }
 }
 
-async function showUser(req, res) {
+async function showUserHabits(req, res) {
     try {
-        const user = await Habit.findByUserId(req.params.user_id);
+        const user = await Habit.findHabitsByUserId(req.params.user_id);
         res.status(200).json(user);
     } catch (err) {
         res.status(404).json({ err });
@@ -37,4 +37,4 @@ async function destroyHabit(req, res) {
     };
 }
 
-module.exports = { index , showUser , createHabit , destroyHabit };
+module.exports = { index , showUserHabits , createHabit , destroyHabit };
