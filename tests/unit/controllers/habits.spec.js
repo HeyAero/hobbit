@@ -40,4 +40,32 @@ describe('habits controller', () => {
         })
     });
 
+    describe('createHabit', () => {
+        test('it returns a new habit with a 201 status code', async () => {
+            let testHabit = {
+                id: 1, 
+                name: 'Exercise', 
+                desc: 'Exercise once a day',
+                frequency: 'Daily', 
+                user_id: '1',
+            }
+            jest.spyOn(Habit, 'create')
+                .mockResolvedValue(new Habit(testHabit));
+                
+            const mockReq = { body: testHabit }
+            await habitsController.createHabit(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(200);
+            expect(mockJson).toHaveBeenCalledWith(new Habit(testHabit));
+        })
+    });
+
+    // describe('destroy', () => {
+    //     test('it returns a 204 status code on successful deletion', async () => {
+    //         jest.spyOn(Habit.prototype, 'destroy')
+    //             .mockResolvedValue('Deleted');
+    //         const mockReq = { params: { id: 1 } }
+    //         await habitsController.destroyHabit(mockReq, mockRes);
+    //         expect(mockStatus).toHaveBeenCalledWith(204);
+    //     })
+    // });
 })
