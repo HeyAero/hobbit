@@ -36,3 +36,4 @@ describe('users controller', () => {
             expect(mockJson).toHaveBeenCalledWith(new User(testUser));
         })
     });
+})
