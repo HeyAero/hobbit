@@ -52,7 +52,7 @@ describe('Habit', () => {
         test('it resolves with message on successful db query', async () => {
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({ id: 1 });
-            let testHabit = new Habit({ id: 1, name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", userId: 1 })
+            let testHabit = new Habit({ name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", userId: 1 })
             const result = await testHabit.destroy();
             expect(result).toBe('Habit was deleted')
         })
