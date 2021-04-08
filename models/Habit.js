@@ -80,7 +80,7 @@ class Habit {
                 const new_streak = this.streak_track + 1;
                 const new_complete = this.streak_end;
                 let new_end = new Date(this.streak_end);
-                let increment = this.freq === 'daily' ? 1 : 7;
+                let increment = this.frequency === 'daily' ? 1 : 7;
                 new_end.setDate(new_end.getDate() + increment);
                 const result = await db.query(
                     SQL`UPDATE habits SET streak_track=${new_streak}, streak_end=${new_end}, streak_complete=${new_complete} WHERE id = ${this.id} RETURNING id, streak_track`
