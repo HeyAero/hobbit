@@ -87,15 +87,15 @@ describe('habits controller', () => {
     });
 
 
-    // doesnt pass test currently - but might not need if we don't implement delete function
-    describe('destroy', () => {
-        test('it returns a 204 status code on successful deletion', async () => {
-            jest.spyOn(Habit.prototype, 'destroy')
-                .mockResolvedValue('Deleted');
+    // doesnt pass test currently - but we are now not implementing delete functionality
+    // describe('destroy', () => {
+    //     test('it returns a 204 status code on successful deletion', async () => {
+    //         jest.spyOn(Habit.prototype, 'destroy')
+    //             .mockResolvedValue('Deleted');
             
-            const mockReq = { params: {id: 1} }
-            await habitsController.destroyHabit(mockReq, mockRes);
-            expect(mockStatus).toHaveBeenCalledWith(204);
-        })
-    });
+    //         const mockReq = { params: {id: 1} }
+    //         await habitsController.destroyHabit(mockReq, mockRes);
+    //         expect(mockStatus).toHaveBeenCalledWith(204);
+    //     })
+    // });
 })

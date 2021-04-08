@@ -62,15 +62,15 @@ describe('Habit', () => {
         })
     });
 
-    //passes test - but might not need if we don't implement delete function
-    describe('destroy', () => {
-        test('it resolves with message on successful db query', async () => {
-            jest.spyOn(db, 'query')
-                .mockResolvedValueOnce({ id: 1 });
-            let testHabit = new Habit({ name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", streak_track: 1, 
-            streak_end: "Streak End", streak_complete: "Streak Complete", userId: 1 })
-            const result = await testHabit.destroy();
-            expect(result).toBe('Habit was deleted')
-        })
-    });
+    //passes test - but we are now not implementing delete functionality
+    // describe('destroy', () => {
+    //     test('it resolves with message on successful db query', async () => {
+    //         jest.spyOn(db, 'query')
+    //             .mockResolvedValueOnce({ id: 1 });
+    //         let testHabit = new Habit({ name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", streak_track: 1, 
+    //         streak_end: "Streak End", streak_complete: "Streak Complete", userId: 1 })
+    //         const result = await testHabit.destroy();
+    //         expect(result).toBe('Habit was deleted')
+    //     })
+    // });
 })

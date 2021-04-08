@@ -99,18 +99,19 @@ class Habit {
         });
     }
 
-    destroy() {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const result = await db.query(
-                    SQL`DELETE FROM habits where id = ${this.id}`
-                );
-                resolve("Habit was deleted");
-            } catch (error) {
-                reject("Could not delete habit");
-            }
-        });
-    }
+    // not implementing delete functionality
+    // destroy() {
+    //     return new Promise(async (resolve, reject) => {
+    //         try {
+    //             const result = await db.query(
+    //                 SQL`DELETE FROM habits where id = ${this.id}`
+    //             );
+    //             resolve("Habit was deleted");
+    //         } catch (error) {
+    //             reject("Could not delete habit");
+    //         }
+    //     });
+    // }
 }
 
 module.exports = Habit

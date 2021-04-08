@@ -56,21 +56,22 @@ describe('habits endpoints', () => {
             });
     });
 
-    it('should delete a habit', async () => {
-        const res = await request(api)
-            .delete('/habits/1')
-            .set('Authorization', `Bearer ${token}`)
-            .then((res) => {
-              expect(res.statusCode).toEqual(204);
-            });
+    // not using delete function
+    // it('should delete a habit', async () => {
+    //     const res = await request(api)
+    //         .delete('/habits/1')
+    //         .set('Authorization', `Bearer ${token}`)
+    //         .then((res) => {
+    //           expect(res.statusCode).toEqual(204);
+    //         });
         
 
-        const habitRes = await request(api).get('/habits/1')
-        .set('Authorization', `Bearer ${token}`)
-        .then((res) => {
-          expect(habitRes.statusCode).toEqual(404);
-          expect(habitRes.body).toHaveProperty('err');
-        });
-    });
+    //     const habitRes = await request(api).get('/habits/1')
+    //     .set('Authorization', `Bearer ${token}`)
+    //     .then((res) => {
+    //       expect(habitRes.statusCode).toEqual(404);
+    //       expect(habitRes.body).toHaveProperty('err');
+    //     });
+    // });
 
 })

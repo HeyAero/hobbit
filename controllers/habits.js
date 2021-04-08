@@ -38,14 +38,15 @@ async function updateHabit(req, res){
     };
 }
 
-async function destroyHabit(req, res) {
-      try {
-        const habit = await Habit.findByHabitId(parseInt(req.params.id));
-        await habit.destroy();
-        res.status(204).end();
-    } catch (err) {
-        res.status(404).json({err});
-    };
-}
+// not implementing delete functionality
+// async function destroyHabit(req, res) {
+//       try {
+//         const habit = await Habit.findByHabitId(parseInt(req.params.id));
+//         await habit.destroy();
+//         res.status(204).end();
+//     } catch (err) {
+//         res.status(404).json({err});
+//     };
+// }
 
-module.exports = { index , showUser , createHabit , updateHabit, destroyHabit };
+module.exports = { index , showUser , createHabit , updateHabit };
