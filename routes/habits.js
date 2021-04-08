@@ -6,6 +6,7 @@ const { verifyToken } = require('../middleware/auth');
 router.get('/', habitsController.index)
 router.get('/:user_id', verifyToken, habitsController.showUserHabits)
 router.post('/', verifyToken, habitsController.createHabit)
+router.patch('/:id', verifyToken, habitsController.updateHabit)
 router.delete('/:id', verifyToken, habitsController.destroyHabit)
 
 module.exports = router;
