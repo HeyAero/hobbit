@@ -65,6 +65,7 @@ describe('habits controller', () => {
         })
     });
 
+    //doesnt pass currently - send back 404 code instead of 200
     describe('updateHabit', () => {
         test('it returns an updated habit streak with a 200 status code', async () => {
             let testHabit = {
