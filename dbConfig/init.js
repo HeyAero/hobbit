@@ -1,7 +1,5 @@
 const { Pool } = require("pg");
 
-process.env.DATABASE_URL
-
 let config;
 
 if(process.env.DATABASE_URL) {
