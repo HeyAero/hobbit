@@ -1,3 +1,5 @@
+const { request } = require("express");
+
 describe('habits endpoints', () => {
     let api;
     beforeEach(async () => {
@@ -37,5 +39,13 @@ describe('habits endpoints', () => {
         expect(res.body).toHaveProperty("id");
     })
 
+    it('should delete a habit', async () => {
+        const res = await request(api)
+            .delete('/habits/1')
+        expect(res.statusCode).toEqual(204);
 
+        const habitRes = await request(api).get('/habits/1');
+        expect(habitRes.statusCode).toEqual(404);
+        expect(habitRes.body).toHaveProperty('err');
+    });
 })
