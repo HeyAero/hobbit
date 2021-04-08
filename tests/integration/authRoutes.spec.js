@@ -1,5 +1,3 @@
-const { request } = require("express");
-
 describe('auth endpoints', () => {
     let api;
     let token;
@@ -7,7 +5,7 @@ describe('auth endpoints', () => {
         await resetTestDB()
     })
 
-    beforeAll(async () => {
+    beforeAll(async (done) => {
         api = app.listen(5000, () => console.log('Test server running on port 5000'));
         request(api)
            .post('/login')
@@ -36,8 +34,11 @@ describe('auth endpoints', () => {
         expect(res.statusCode).toEqual(201);
         expect(res.body).toHaveProperty("id");
 
-        const authRes = await request(api).get('/authors/3');
-        expect(authRes.body).toHaveProperty("password_digest");
+        const authRes = await request(api).get('/users/3')
+        .set('Authorization', `Bearer ${token}`)
+        .then((res) => {
+           expect(authRes.body).toHaveProperty("password_digest"); 
+        });
     })
 
     it('logs in user successfully', async () => {

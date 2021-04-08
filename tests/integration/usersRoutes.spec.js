@@ -1,5 +1,3 @@
-const { request } = require("express");
-
 describe('users endpoints', () => {
     let api;
     beforeEach(async () => {
