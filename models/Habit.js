@@ -1,5 +1,6 @@
 const db = require("../dbConfig/init");
 const SQL = require("sql-template-strings");
+const e = require("express");
 
 class Habit {
     constructor(data) {
@@ -77,9 +78,15 @@ class Habit {
     update() {
         return new Promise(async (resolve, reject) => {
             try {
-                const new_streak = this.streak_track + 1;
                 const new_complete = this.streak_end;
                 let new_end = new Date(this.streak_end);
+                let new_streak;
+                const current_date = new Date();
+                if (current_date > new_end) {
+                    new_streak = 0;
+                } else {
+                    new_streak = this.streak_track + 1;
+                }
                 let increment = this.frequency === 'daily' ? 1 : 7;
                 new_end.setDate(new_end.getDate() + increment);
                 const result = await db.query(
