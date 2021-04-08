@@ -31,8 +31,8 @@ async function updateHabit(req, res){
     try{
         console.log(req.params.id)
         const habit = await Habit.findByHabitId(parseInt(req.params.id));
-        await habit.update();
-        res.status(200).json(habit)
+        const habit_update = await habit.update();
+        res.status(200).json(habit_update)
     } catch (err) {
         res.status(404).json({err});
     };
