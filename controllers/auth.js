@@ -20,6 +20,8 @@ async function login(req, res) {
     try {
         const user = await User.findByUsername(req.body.username)
         if(!user){ throw new Error('No user with this username') }
+        console.log(req.body.password)
+        console.log(user.passwordDigest)
         const authed = bcrypt.compare(req.body.password, user.passwordDigest)
         if (!!authed){
             const payload = { username: user.username, id : user.id }
