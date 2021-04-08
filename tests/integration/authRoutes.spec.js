@@ -8,7 +8,7 @@ describe('auth endpoints', () => {
     })
 
     beforeAll(async () => {
-        api = api.listen(5000, () => console.log('Test server running on port 5000'));
+        api = app.listen(5000, () => console.log('Test server running on port 5000'));
         request(api)
            .post('/login')
            .send({
