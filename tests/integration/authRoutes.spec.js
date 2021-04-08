@@ -1,11 +1,3 @@
-//2 functions to test
-//register and login
-//register() aim is to create a new user and hash their password to store securely
-//login() aim is: 1) find user by username
-//                2) compare passwords using bcrypt
-//                3) generate session token
-//                4) sign in user
-
 const { request } = require("express");
 
 describe('auth endpoints', () => {
@@ -60,10 +52,20 @@ describe('auth endpoints', () => {
     })
 
     it('should require authorization', () => {
-        return request(app)
+        return request(api)
           .get('/')
           .then((res) => {
               expect(res.statusCode).toBe(401);
           });
+    });
+
+    it('responds with JSON', () => {
+        return request(api)
+           .get('/')
+           .set('Authorisation', `Bearer ${token}`)
+           .then((res) => {
+               expect(res.statusCode).toBe(200);
+               expect(res.type).toBe('application/json');
+           });
     });
 })
