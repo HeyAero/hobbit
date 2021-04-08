@@ -4,7 +4,7 @@ const fs = require('fs');
 const request = require('supertest');
 const apiServer = require('../../server');
 
-const reset = fs.readFileSync(_dirname + '/reset.sql').toString();
+const reset = fs.readFileSync(__dirname + '/reset.sql').toString();
 
 const resetTestDB = () => {
     return new Promise (async (res, rej) => {
