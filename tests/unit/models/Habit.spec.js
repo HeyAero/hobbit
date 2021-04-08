@@ -20,7 +20,8 @@ describe('Habit', () => {
 
     describe('findByHabitId', () => {
         test('it resolves with habit on successful db query', async () => {
-            let habitData = { id: 1, name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", userId: 1 }
+            let habitData = { id: 1, name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", streak_track: 1, 
+            streak_end: "Streak End", streak_complete: "Streak Complete", userId: 1, }
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({rows: [ habitData] });
             const result = await Habit.findByHabitId(1);
@@ -30,7 +31,8 @@ describe('Habit', () => {
 
     describe('findByUserId', () => {
         test('it resolves with habits of user on successful db query', async () => {
-            let habitData = { id: 1, name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", userId: 1 }
+            let habitData = { id: 1, name: "Drink water" , desc: "Drink 8 cups of water a day", frequency: "Daily", streak_track: 1, 
+            streak_end: "Streak End", streak_complete: "Streak Complete", userId: 1, }
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({rows: [ habitData] });
             const result = await Habit.findByUserId(1);
@@ -40,7 +42,8 @@ describe('Habit', () => {
 
     describe('create', () => {
         test('it resolves with habit on successful db query', async () => {
-            let habitData = { name: "Drink water" , habit_desc: "Drink 8 cups of water a day", frequency: "Daily" }
+            let habitData = { name: "Drink water" , habit_desc: "Drink 8 cups of water a day", frequency: "Daily", streak_track: 1, 
+            streak_end: "Streak End", streak_complete: "Streak Complete", userId: 1, }
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({rows: [{...habitData, id: 1}]});
             const result = await Habit.create(habitData);
@@ -48,6 +51,18 @@ describe('Habit', () => {
         })
     });
 
+    describe('update', () => {
+        test('it resolves with updated habit on successful db query', async () => {
+            let habitData = { name: "Drink water" , habit_desc: "Drink 8 cups of water a day", frequency: "Daily", streak_track: 2, 
+            streak_end: "Streak End", streak_complete: "Streak Complete", userId: 1, }
+            jest.spyOn(db, 'query')
+            .mockResolvedValueOnce({rows: [] });
+            const result = await habitData.update();
+            expect(result).toBeInstanceOf(Habit)
+        })
+    });
+
+    //passes test - but might not need if we don't implement delete function
     describe('destroy', () => {
         test('it resolves with message on successful db query', async () => {
             jest.spyOn(db, 'query')

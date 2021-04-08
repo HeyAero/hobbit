@@ -28,6 +28,9 @@ describe('habits controller', () => {
                 name: 'habit', 
                 desc: 'description',
                 frequency: 'daily',
+                streak_track: 1,
+                streak_end: "Streak End",
+                streak_complete: "Streak Complete",
                 userId: 1,
             }
             jest.spyOn(Habit, 'findByUserId')
@@ -41,13 +44,16 @@ describe('habits controller', () => {
     });
 
     describe('createHabit', () => {
-        test('it returns a new habit with a 201 status code', async () => {
+        test('it returns a new habit with a 200 status code', async () => {
             let testHabit = {
                 id: 1, 
                 name: 'Exercise', 
                 desc: 'Exercise once a day',
                 frequency: 'Daily', 
-                user_id: '1',
+                streak_track: 1,
+                streak_end: "Streak End",
+                streak_complete: "Streak Complete",
+                userId: 1,
             }
             jest.spyOn(Habit, 'create')
                 .mockResolvedValue(new Habit(testHabit));
@@ -59,11 +65,51 @@ describe('habits controller', () => {
         })
     });
 
+    describe('updateHabit', () => {
+        test('it returns an updated habit streak with a 200 status code', async () => {
+            let testHabit = {
+                id: 1, 
+                name: 'Exercise', 
+                desc: 'Exercise once a day',
+                frequency: 'Daily', 
+                streak_track: 3,
+                streak_end: "Streak End",
+                streak_complete: "Streak Complete",
+                userId: 1,
+            }
+            jest.spyOn(Habit.prototype, 'update')
+            .mockResolvedValue(new Habit(testHabit));
+            const mockReq = { id: 1 }
+            await habitsController.updateHabit(mockReq, mockRes);
+            expect(mockStatus).toHaveBeenCalledWith(200);
+        })
+        // test('it returns a 404 status on unsuccessful update', async () => {
+        //     let testHabit = {
+        //         id: 1, 
+        //         name: 'Exercise', 
+        //         desc: 'Exercise once a day',
+        //         frequency: 'Daily', 
+        //         streak_track: 3,
+        //         streak_end: "Streak End",
+        //         streak_complete: "Streak Complete",
+        //         userId: 1,
+        //     }
+        //     jest.spyOn(Habit.prototype, 'update')
+        //     .mockResolvedValue(undefined);
+        //     const mockReq = { id: 1  }
+        //     await habitsController.updateHabit(mockReq, mockRes);
+        //     expect(mockStatus).toHaveBeenCalledWith(404);
+        //     });
+    });
+
+
+    // doesnt pass test currently - but might not need if we don't implement delete function
     // describe('destroy', () => {
     //     test('it returns a 204 status code on successful deletion', async () => {
     //         jest.spyOn(Habit.prototype, 'destroy')
     //             .mockResolvedValue('Deleted');
-    //         const mockReq = { params: { id: 1 } }
+            
+    //         const mockReq = { params: {id: 1} }
     //         await habitsController.destroyHabit(mockReq, mockRes);
     //         expect(mockStatus).toHaveBeenCalledWith(204);
     //     })
