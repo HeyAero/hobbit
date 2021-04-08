@@ -13,10 +13,10 @@ describe('auth endpoints', () => {
            .post('/login')
            .send({
                username: 'User1',
-               password: 'hihuyyftcg5r5456576'
+               password_digest: 'hihuyyftcg5r5456576'
            })
-           .end((err, response) => {
-               token = response.body.token;
+           .end((err, res) => {
+               token = res.body.token;
                done();
            });
     });
@@ -39,13 +39,11 @@ describe('auth endpoints', () => {
         const authRes = await request(api).get('/authors/3');
         expect(authRes.body).toHaveProperty("password_digest");
     })
+
     it('logs in user successfully', async () => {
         const res = await request(api)
             .post('/login')
-            .send({
-                username: 'User1',
-                password: 'hihuyyftcg5r5456576'
-            })
+            .set('Authorization', `Bearer ${token}`)
         expect(res.statusCode).toEqual(200);
         expect(res.body.username).toEqual('User1')
         expect(res.body.authed).toBeTruthy()
