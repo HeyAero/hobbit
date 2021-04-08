@@ -30,11 +30,11 @@ describe('habits controller', () => {
                 frequency: 'daily',
                 userId: 1,
             }
-            jest.spyOn(Habit, 'findHabitsByUserId')
+            jest.spyOn(Habit, 'findByUserId')
                 .mockResolvedValue(new Habit(testHabit));
                
             const mockReq = { params: { id: 1 } }
-            await habitsController.showUserHabits(mockReq, mockRes);
+            await habitsController.showUser(mockReq, mockRes);
             expect(mockStatus).toHaveBeenCalledWith(200);
             expect(mockJson).toHaveBeenCalledWith(new Habit(testHabit));
         })
