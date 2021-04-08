@@ -1,9 +1,9 @@
 TRUNCATE users, habits RESTART IDENTITY;
 
-INSERT INTO users (usename, password)
+INSERT INTO users (usename, password_digest)
 VALUES 
-    ('User1', 'strong password'),
-    ('User2', 'even stronger password');
+    ('User1', 'hihuyyftcg5r5456576'),
+    ('User2', 'uihihuhihid545457f6');
 
 INSERT INTO habits (habit_desc, frequency, streak_track, streak_start, streak_end, user_id)
 VALUES
