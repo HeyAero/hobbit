@@ -5,19 +5,11 @@ describe('auth endpoints', () => {
         await resetTestDB()
     })
 
-    beforeAll(async (done) => {
-        api = app.listen(5000, () => console.log('Test server running on port 5000'));
-        request(api)
-           .post('/login')
-           .send({
-               username: 'User1',
-               password_digest: 'hihuyyftcg5r5456576'
-           })
-           .end((err, res) => {
-               token = res.body.token;
-               done();
-           });
-    });
+    beforeAll(async () => {
+        api = app.listen(5000, () =>
+          console.log("Test server running on port 5000")
+        );
+      });
 
     afterAll(async () => {
         console.log('Gracefully stopping test server')
@@ -25,43 +17,58 @@ describe('auth endpoints', () => {
     })
 
     it('registers new user successfully', async () => {
-        const res = await request(api)
-            .post('/register')
-            .send({
-                username: 'Funky',
-                password: 'setthegroove'
-            })
-        expect(res.statusCode).toEqual(201);
-        expect(res.body).toHaveProperty("id");
-
-        const authRes = await request(api).get('/users/3')
-        .set('Authorization', `Bearer ${token}`)
-        .then((res) => {
-           expect(authRes.body).toHaveProperty("password_digest"); 
-        });
+            const res = await request(api)
+              .post("/auth/register")
+              .send({ username: "user3", password: "ufahfish89343rhr" });
+            expect(res.statusCode).toEqual(201);
     })
 
     it('logs in user successfully', async () => {
+        let token;
+        const resAuthed = await request(api)
+            .post('/auth/login')
+            .send({ username: "User1", password: "hihuyyftcg5r5456576" });
+            token = resAuthed.body.token;
         const res = await request(api)
-            .post('/login')
-            .set('Authorization', `Bearer ${token}`)
-        expect(res.statusCode).toEqual(200);
-        expect(res.body.username).toEqual('User1')
-        expect(res.body.authed).toBeTruthy()
+            .get("/users/User1")
+            .set("Authorization", `Bearer ${token}`);
+          expect(res.statusCode).toEqual(200);
+
     })
 
-    it('should require authorization', () => {
+    it('does not log in user if the user exists and their password is incorrect', async () => {
+        const res = await request(api)
+            .post('/auth/login')
+            .send({ username: "user1", password: "wrongpassword" });
+        expect(res.statusCode).toEqual(401);
+    })
+
+    it('does not log in user if user does not exist', async () => {
+        const res = await request(api)
+            .post('/auth/login')
+            .send({ username: "user5", password: "afhuiahfhd432" });
+        expect(res.statusCode).toEqual(401);
+    })
+
+    it('should require authorization to access users route', () => {
         return request(api)
-          .get('/')
+          .get('/users/1')
           .then((res) => {
-              expect(res.statusCode).toBe(401);
+              expect(res.statusCode).toBe(403);
+          });
+    });
+    
+    it('should require authorization to access habits route', () => {
+        return request(api)
+          .get('/habits/1')
+          .then((res) => {
+              expect(res.statusCode).toBe(403);
           });
     });
 
     it('responds with JSON', () => {
         return request(api)
            .get('/')
-           .set('Authorisation', `Bearer ${token}`)
            .then((res) => {
                expect(res.statusCode).toBe(200);
                expect(res.type).toBe('application/json');

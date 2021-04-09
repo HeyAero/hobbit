@@ -44,16 +44,18 @@ describe('habits endpoints', () => {
     it('should create a new habit successfully', async () => {
         const res = await request(api)
             .post('/habits')
-             .set('Authorization', `Bearer ${token}`)
              .send({
                 name: 'Hey New Habit',
                 habit_desc: 'Brand new resolution',
-                frequency: 'daily'
+                frequency: 'daily',
+                streak_track: 1,
+                streak_end: 'unknown',
+                streak_complete: 'unknown',
+                user_id: 1
             })
-             .then((res) => {
               expect(res.statusCode).toEqual(200);
               expect(res.body).toHaveProperty("id");
-            });
+              console.log(res);
     });
 
     // not using delete function
@@ -64,8 +66,6 @@ describe('habits endpoints', () => {
     //         .then((res) => {
     //           expect(res.statusCode).toEqual(204);
     //         });
-        
-
     //     const habitRes = await request(api).get('/habits/1')
     //     .set('Authorization', `Bearer ${token}`)
     //     .then((res) => {
