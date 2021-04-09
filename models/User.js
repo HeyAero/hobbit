@@ -12,7 +12,7 @@ class User {
     return new Promise(async (res, rej) => {
       try {
         let result = await db.query(SQL`SELECT * FROM users;`);
-        let users = result.row.map(r => new User(r));
+        let users = result.rows.map(r => new User(r));
         res(users);
       } catch (err) {
         rej(`ERROR: Could not retrieve users - ${err}`);
